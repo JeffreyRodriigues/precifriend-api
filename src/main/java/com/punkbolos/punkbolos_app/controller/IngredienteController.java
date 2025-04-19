@@ -1,7 +1,6 @@
 package com.punkbolos.punkbolos_app.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,51 +15,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.punkbolos.punkbolos_app.model.Ingrediente;
-import com.punkbolos.punkbolos_app.repository.IngredienteRepository;
+import com.punkbolos.punkbolos_app.service.IngredienteService;
 
 @RestController
 @RequestMapping("/api/ingredientes")
 public class IngredienteController {
 
     @Autowired
-    private IngredienteRepository ingredienteRepository;
+    private IngredienteService ingredienteService;
 
     @PostMapping
-    public Ingrediente adicionarIngrediente(@RequestBody Ingrediente ingrediente) {
-        return ingredienteRepository.save(ingrediente);
+    public ResponseEntity<?> adicionarIngrediente(@RequestBody Ingrediente ingrediente) {
+        try {
+            Ingrediente salvo = ingredienteService.salvar(ingrediente);
+            return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-    
+
+    @GetMapping
+    public List<Ingrediente> listarIngredientes() {
+        return ingredienteService.listarTodos();
+    }
+
     @GetMapping("/teste")
     public String teste() {
         return "API no ar!";
     }
 
-    @GetMapping
-    public List<Ingrediente> listarIngredientes() {
-        return ingredienteRepository.findAll();
-    }
-
     @PutMapping("/{id}")
-    public Ingrediente atualizarIngrediente(@PathVariable Long id, @RequestBody Ingrediente ingrediente) {
-        Ingrediente existente = ingredienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ingrediente não encontrado"));
-        existente.setNome(ingrediente.getNome());
-        existente.setQuantidadeEmbalagem(ingrediente.getQuantidadeEmbalagem());
-        existente.setCustoEmbalagem(ingrediente.getCustoEmbalagem());
-        return ingredienteRepository.save(existente);
+    public ResponseEntity<?> atualizarIngrediente(@PathVariable Long id, @RequestBody Ingrediente ingrediente) {
+        try {
+            Ingrediente atualizado = ingredienteService.atualizar(id, ingrediente);
+            return ResponseEntity.ok(atualizado);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletarIngrediente(@PathVariable Long id) {
-        Optional<Ingrediente> ingredienteOptional = ingredienteRepository.findById(id);
-
-        if (ingredienteOptional.isPresent()) {
-            Ingrediente ingrediente = ingredienteOptional.get();
-            String nome = ingrediente.getNome();
-            ingredienteRepository.deleteById(id);
-            return ResponseEntity.ok("Ingrediente '" + nome + "' foi deletado com sucesso.");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ingrediente com ID " + id + " não encontrado.");
+        try {
+            String msg = ingredienteService.deletar(id);
+            return ResponseEntity.ok(msg);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 }

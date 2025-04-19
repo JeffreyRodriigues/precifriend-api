@@ -15,7 +15,7 @@ public class Ingrediente {
     private Long id;
 
     private String nome;
-    private double quantidadeEmbalagem; // em gramas
+    private Integer quantidadeEmbalagem; // em gramas
     private BigDecimal custoEmbalagem;
 
     // Construtor vazio (obrigatório para o JPA)
@@ -23,7 +23,7 @@ public class Ingrediente {
     }
 
     // Construtor com argumentos (opcional, mas útil)
-    public Ingrediente(String nome, double quantidadeEmbalagem, BigDecimal custoEmbalagem) {
+    public Ingrediente(String nome, Integer quantidadeEmbalagem, BigDecimal custoEmbalagem) {
         this.nome = nome;
         this.quantidadeEmbalagem = quantidadeEmbalagem;
         this.custoEmbalagem = custoEmbalagem;
@@ -46,11 +46,11 @@ public class Ingrediente {
         this.nome = nome;
     }
 
-    public double getQuantidadeEmbalagem() {
+    public Integer getQuantidadeEmbalagem() {
         return quantidadeEmbalagem;
     }
 
-    public void setQuantidadeEmbalagem(double quantidadeEmbalagem) {
+    public void setQuantidadeEmbalagem(Integer quantidadeEmbalagem) {
         this.quantidadeEmbalagem = quantidadeEmbalagem;
     }
 

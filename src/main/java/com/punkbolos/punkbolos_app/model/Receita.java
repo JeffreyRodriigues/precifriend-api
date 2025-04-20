@@ -1,10 +1,12 @@
 package com.punkbolos.punkbolos_app.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +25,9 @@ public class Receita {
     @OneToMany(mappedBy = "receita", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<ItemReceita> itens;
+    
+    @Column(precision = 10, scale = 2)
+    private BigDecimal custoTotal;
 
     // Getters e Setters
     public Long getId() { return id; }
@@ -43,4 +48,12 @@ public class Receita {
             }
         }
     }
+
+	public BigDecimal getCustoTotal() {
+		return custoTotal;
+	}
+
+	public void setCustoTotal(BigDecimal custoTotal) {
+		this.custoTotal = custoTotal;
+	}
 }

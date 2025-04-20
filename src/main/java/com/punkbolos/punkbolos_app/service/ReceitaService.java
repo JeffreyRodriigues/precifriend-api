@@ -10,6 +10,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.punkbolos.punkbolos_app.dto.ReceitaCustoDTO;
 import com.punkbolos.punkbolos_app.model.Ingrediente;
 import com.punkbolos.punkbolos_app.model.ItemReceita;
 import com.punkbolos.punkbolos_app.model.Receita;
@@ -164,5 +165,33 @@ public class ReceitaService {
         }
 
         return total.setScale(2, RoundingMode.HALF_UP);
+    }
+    
+    public ReceitaCustoDTO calcularCusto(Long id) {
+        Receita receita = receitaRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Receita com ID " + id + " não encontrada."));
+
+        BigDecimal custoIngredientes = receita.getItens().stream()
+            .map(item -> {
+                BigDecimal custoUnitario = item.getIngrediente().getCustoEmbalagem()
+                    .divide(new BigDecimal(item.getIngrediente().getQuantidadeEmbalagem()), 4, RoundingMode.HALF_UP);
+                return custoUnitario.multiply(new BigDecimal(item.getQuantidade()));
+            })
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal taxasFixas = custoIngredientes.multiply(new BigDecimal("0.25"));
+        BigDecimal subtotal = custoIngredientes.add(taxasFixas);
+        BigDecimal precoFinal = subtotal.multiply(new BigDecimal("3"));
+
+        receita.setPrecoFinal(precoFinal);
+        receitaRepository.save(receita);
+        
+        return new ReceitaCustoDTO(
+            receita.getNome(),
+            custoIngredientes.setScale(2, RoundingMode.HALF_UP),
+            taxasFixas.setScale(2, RoundingMode.HALF_UP),
+            subtotal.setScale(2, RoundingMode.HALF_UP),
+            precoFinal.setScale(2, RoundingMode.HALF_UP)
+        );
     }
 }

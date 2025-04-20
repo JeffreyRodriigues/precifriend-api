@@ -28,6 +28,9 @@ public class Receita {
     
     @Column(precision = 10, scale = 2)
     private BigDecimal custoTotal;
+    
+    @Column(precision = 10, scale = 2)
+    private BigDecimal precoFinal;
 
     // Getters e Setters
     public Long getId() { return id; }
@@ -55,5 +58,13 @@ public class Receita {
 
 	public void setCustoTotal(BigDecimal custoTotal) {
 		this.custoTotal = custoTotal;
+	}
+
+	public BigDecimal getPrecoFinal() {
+		return precoFinal;
+	}
+
+	public void setPrecoFinal(BigDecimal precoFinal) {
+		this.precoFinal = precoFinal;
 	}
 }

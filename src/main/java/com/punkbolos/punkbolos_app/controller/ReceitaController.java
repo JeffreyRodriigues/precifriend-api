@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.punkbolos.punkbolos_app.dto.ReceitaCustoDTO;
 import com.punkbolos.punkbolos_app.model.Receita;
 import com.punkbolos.punkbolos_app.service.ReceitaService;
 
@@ -67,6 +68,14 @@ public class ReceitaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); // Caso não encontre a receita
         }
     }
-
-
+    
+    @GetMapping("/{id}/calcular")
+    public ResponseEntity<?> calcularPrecoReceita(@PathVariable Long id) {
+        try {
+            ReceitaCustoDTO custoDTO = receitaService.calcularCusto(id);
+            return ResponseEntity.ok(custoDTO);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

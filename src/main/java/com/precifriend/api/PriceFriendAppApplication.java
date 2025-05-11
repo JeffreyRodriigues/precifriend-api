@@ -1,13 +1,13 @@
-package com.punkbolos.punkbolos_app;
+package com.precifriend.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PunkbolosAppApplication {
+public class PriceFriendAppApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PunkbolosAppApplication.class, args);
+		SpringApplication.run(PriceFriendAppApplication.class, args);
 	}
 
 }

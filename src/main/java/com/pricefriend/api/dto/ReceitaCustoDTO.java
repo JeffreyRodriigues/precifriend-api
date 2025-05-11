@@ -1,4 +1,4 @@
-package com.punkbolos.punkbolos_app.dto;
+package com.pricefriend.api.dto;
 
 import java.math.BigDecimal;
 

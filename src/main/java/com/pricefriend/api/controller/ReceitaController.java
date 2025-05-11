@@ -1,4 +1,4 @@
-package com.punkbolos.punkbolos_app.controller;
+package com.pricefriend.api.controller;
 
 import java.util.List;
 
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.punkbolos.punkbolos_app.dto.ReceitaCustoDTO;
-import com.punkbolos.punkbolos_app.model.Receita;
-import com.punkbolos.punkbolos_app.service.ReceitaService;
+import com.pricefriend.api.dto.ReceitaCustoDTO;
+import com.pricefriend.api.model.Receita;
+import com.pricefriend.api.service.ReceitaService;
 
 @RestController
 @RequestMapping("/api/receitas")

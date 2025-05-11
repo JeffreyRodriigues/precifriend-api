@@ -1,4 +1,4 @@
-package com.punkbolos.punkbolos_app.service;
+package com.pricefriend.api.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -10,12 +10,12 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.punkbolos.punkbolos_app.dto.ReceitaCustoDTO;
-import com.punkbolos.punkbolos_app.model.Ingrediente;
-import com.punkbolos.punkbolos_app.model.ItemReceita;
-import com.punkbolos.punkbolos_app.model.Receita;
-import com.punkbolos.punkbolos_app.repository.IngredienteRepository;
-import com.punkbolos.punkbolos_app.repository.ReceitaRepository;
+import com.pricefriend.api.dto.ReceitaCustoDTO;
+import com.pricefriend.api.model.Ingrediente;
+import com.pricefriend.api.model.ItemReceita;
+import com.pricefriend.api.model.Receita;
+import com.pricefriend.api.repository.IngredienteRepository;
+import com.pricefriend.api.repository.ReceitaRepository;
 
 @Service
 public class ReceitaService {

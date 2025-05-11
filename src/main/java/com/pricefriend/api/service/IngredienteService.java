@@ -1,4 +1,4 @@
-package com.punkbolos.punkbolos_app.service;
+package com.pricefriend.api.service;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -7,8 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.punkbolos.punkbolos_app.model.Ingrediente;
-import com.punkbolos.punkbolos_app.repository.IngredienteRepository;
+import com.pricefriend.api.model.Ingrediente;
+import com.pricefriend.api.repository.IngredienteRepository;
 
 @Service
 public class IngredienteService {

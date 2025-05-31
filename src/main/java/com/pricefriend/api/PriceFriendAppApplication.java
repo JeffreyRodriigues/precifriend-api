@@ -1,4 +1,4 @@
-package com.precifriend.api;
+package com.pricefriend.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

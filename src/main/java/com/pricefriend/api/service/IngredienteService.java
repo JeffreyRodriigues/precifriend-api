@@ -49,10 +49,13 @@ public class IngredienteService {
             throw new IllegalArgumentException("O nome do ingrediente não pode ser vazio.");
         }
 
-        // Verifica se já existe um ingrediente com o mesmo nome, ignorando maiúsculas/minúsculas
         Optional<Ingrediente> ingredienteExistente = ingredienteRepository.findByNomeIgnoreCase(ingrediente.getNome());
+
         if (ingredienteExistente.isPresent()) {
-            throw new IllegalArgumentException("Já existe um ingrediente com o nome '" + ingrediente.getNome() + "'.");
+            // Se for criação (id null) ou atualizar para nome que já existe em outro ingrediente
+            if (ingrediente.getId() == null || !ingredienteExistente.get().getId().equals(ingrediente.getId())) {
+                throw new IllegalArgumentException("Já existe um ingrediente com o nome '" + ingrediente.getNome() + "'.");
+            }
         }
 
         if (ingrediente.getQuantidadeEmbalagem() == null || ingrediente.getQuantidadeEmbalagem() <= 0) {
